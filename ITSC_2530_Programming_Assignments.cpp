@@ -5,5 +5,5 @@
 
 int main()
 {
-    std::cout << "Hello new online World 2!\n";
+    std::cout << "Hello new online World 2026!\n";
 }
