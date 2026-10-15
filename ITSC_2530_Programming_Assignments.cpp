@@ -5,5 +5,5 @@
 
 int main()
 {
-    std::cout << "Hello World!--2026\n";
+    std::cout << "Hello World!\n";
 }
