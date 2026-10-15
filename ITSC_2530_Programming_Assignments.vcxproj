@@ -203,9 +203,6 @@
     <ClCompile Include="ITSC_2530_Programming_Assignments.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="sources\mcc.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
