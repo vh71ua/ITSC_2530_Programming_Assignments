@@ -1,5 +1,8 @@
+<p align="left">
+   <img src="sources/mcc.png" alt="MCC Logo" width="150">
+</p>
+---
 
-<img src="sources/mcc.png" alt="MCC Logo" width="150">
 # ITSC_2530_Programming_Assignments
 
 ## Vlad Horobchenko
