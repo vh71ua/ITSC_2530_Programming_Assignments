@@ -14,5 +14,5 @@ For this course, I plan to reflect that passion into a C++ console application. 
 
 <p align="center">
   <img src="sources/cake.png" alt="Apple Cake" width="150"><br>
-  <em>Image: <a href="https://richanddelish.com/apple-cake-sharlotka/" target="_blank">Rich and Delish</a></em>
+  <em>Image: <a href="https://richanddelish.com/apple-cake-sharlotka/" target="_blank" rel="noopener noreferrer">Rich and Delish</a></em>
 </p>
