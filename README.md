@@ -4,7 +4,7 @@
 </p>
 
 
-# ITSC_2530_Programming_Assignments-bla
+# ITSC_2530_Programming_Assignments
 
 ## Vlad Horobchenko
 
