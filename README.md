@@ -13,6 +13,6 @@ When I’m away from the keyboard, you’ll might find me in the kitchen. My uni
 For this course, I plan to reflect that passion into a C++ console application. My program will consolidate everything an enthusiast needs to know about apple pies, from ingredient ratios and dough-mixing techniques to precise baking parameters. I'm looking forward to building a project that brings a bit of culinary creativity into the world of C++!
 
 <p align="center">
-   <img src="sources/cake.png" alt="Apple Cake" width="150"><br>
-   Image:Rich and Delish<br>(https://richanddelish.com/apple-cake-sharlotka/)
+  <img src="sources/cake.png" alt="Apple Cake" width="150"><br>
+  <em>Image: <a href="https://richanddelish.com/apple-cake-sharlotka/" target="_blank">Rich and Delish</a></em>
 </p>
