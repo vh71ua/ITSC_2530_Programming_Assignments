@@ -1,14 +1,14 @@
 #include <windows.h>
 #include <iostream>
 
-using namespace std;
+using namespace std;   
 
 int main()
 {
 	// Variables definitions
     char c_name[50];
 	char c_drink[50];
-	char c_flavor[50];
+	char c_flavor[50];   
 
 	// Setting the console output code page to UTF-8
     SetConsoleOutputCP(CP_UTF8);
@@ -21,13 +21,13 @@ int main()
     cout << "███████║██████╔╝██████╔╝██║░░░░░█████╗░░░░░░░██████╔╝██║█████╗░░" << endl;
     cout << "██╔══██║██╔═══╝░██╔═══╝░██║░░░░░██╔══╝░░░░░░░██╔═══╝░██║██╔══╝░░" << endl;
     cout << "██║░░██║██║░░░░░██║░░░░░███████╗███████╗░░░░░██║░░░░░██║███████╗" << endl;
-    cout << "╚═╝░░╚═╝╚═╝░░░░░╚═╝░░░░░╚══════╝╚══════╝░░░░░╚═╝░░░░░╚═╝╚══════╝" << endl;
+    cout << "╚═╝░░╚═╝╚═╝░░░░░╚═╝░░░░░╚══════╝╚══════╝░░░░░╚═╝░░░░░╚═╝╚══════╝" << endl;   
 	cout << "" << endl;
     cout << "" << endl;
 
     //Name Input
     cout << "Hello!" << endl;
-    cout << "Please type your name: ";
+    cout << "Please, type your name: ";
     cin >> c_name;
     cout << "" << endl;
     cout << "Hello, " << c_name << "!" << endl;
