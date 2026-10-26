@@ -1,0 +1,27 @@
+==================================================================
+                     APPLE PIE PLANNING REPORT                    
+==================================================================
+Parameter / Ingredient                            Amount / Value
+------------------------------------------------------------------
+Baker Name:                                       Vlad
+Pieces Requested:                                 10
+------------------------------------------------------------------
+Apples:                                           7.50
+Eggs:                                             5.00
+Sugar (cups):                                     2.50
+Flour (cups):                                     2.50
+Baking Powder (tsp):                              2.50
+------------------------------------------------------------------
+Total Estimated Cost:                             $10.00
+Your Budget:                                      $20.00
+Budget Difference (+/-):                          $10.00
+Full Pies Affordable ($4 ea):                     5
+==================================================================
+                        BAKING INSTRUCTIONS                       
+==================================================================
+1. Peel, core, and slice the apples.
+2. Mix flour, sugar, and baking powder together in a bowl.
+3. Beat the eggs and combine with the dry mixture.
+4. Fold in the sliced apples gently into the batter.
+5. Bake at 350°F (175°C) for 35-40 minutes until golden brown.
+==================================================================
