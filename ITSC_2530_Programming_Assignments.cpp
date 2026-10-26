@@ -1,4 +1,4 @@
-#include <windows.h>
+#include <windows.h>   
 #include <iostream>
 #include <iomanip>  // Required for setw, left, fixed, and setprecision
 #include <fstream>  // Required for file output (report.txt)
@@ -92,9 +92,9 @@ int main()
     cout << "==================================================================" << endl;
     cout << "                     APPLE PIE PLANNING REPORT                    " << endl;
     cout << "==================================================================" << endl;
-
+       
     // Set up precision for floating-point values
-    cout << fixed << setprecision(2);
+    cout << fixed << setprecision(2); 
 
     cout << left << setw(50) << "Parameter / Ingredient" << "Amount / Value" << endl;
     cout << "------------------------------------------------------------------" << endl;
