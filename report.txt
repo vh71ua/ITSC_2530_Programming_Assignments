@@ -12,10 +12,13 @@ Sugar (cups):                                     2.50
 Flour (cups):                                     2.50
 Baking Powder (tsp):                              2.50
 ------------------------------------------------------------------
-Total Estimated Cost:                             $10.00
-Your Budget:                                      $20.00
-Budget Difference (+/-):                          $10.00
+Total Estimated Cost:                                     $10.00
+Your Budget:                                              $20.00
+------------------------------------------------------------------
+You have money leftover in your budget:           $10.00
 Full Pies Affordable ($4 ea):                     5
+Pie pieces Affordable ($1 ea):                    20
+
 ==================================================================
                         BAKING INSTRUCTIONS                       
 ==================================================================
