@@ -1,4 +1,3 @@
-#include <windows.h>   
 #include <iostream>
 #include <iomanip>  // Required for setw, left, fixed, and setprecision
 #include <fstream>  // Required for file output (report.txt)
@@ -19,21 +18,9 @@ int main()
     const int MAX_NUM_PIECES = 70; // Maximum number of pie pieces
 
 
-    // Setting the console output code page to UTF-8
-    SetConsoleOutputCP(CP_UTF8);
-    SetConsoleCP(CP_UTF8);
-
-    // Interacting with the User - ASCII Art Banner
-    cout << "" << endl;
-    cout << "░█████╗░██████╗░██████╗░██╗░░░░░███████╗░░░░░██████╗░██╗███████╗" << endl;
-    cout << "██╔══██╗██╔══██╗██╔══██╗██║░░░░░██╔════╝░░░░░██╔══██╗██║██╔════╝" << endl;
-    cout << "███████║██████╔╝██████╔╝██║░░░░░█████╗░░░░░░░██████╔╝██║█████╗░░" << endl;
-    cout << "██╔══██║██╔═══╝░██╔═══╝░██║░░░░░██╔══╝░░░░░░░██╔═══╝░██║██╔══╝░░" << endl;
-    cout << "██║░░██║██║░░░░░██║░░░░░███████╗███████╗░░░░░██║░░░░░██║███████╗" << endl;
-    cout << "╚═╝░░╚═╝╚═╝░░░░░╚═╝░░░░░╚══════╝╚══════╝░░░░░╚═╝░░░░░╚═╝╚══════╝" << endl;
-    cout << "" << endl;
-
-    // Welcome and Base Recipe Banner Section
+    // The Welcome and the base recipe banner section
+    cout << " ------------------------------------------------------------------ " << endl;
+    cout << "|          APPLE PIE                                               |" << endl;
     cout << " ------------------------------------------------------------------ " << endl;
     cout << "|Welcome to the Apple Pie planning program!                        |" << endl;
     cout << "|This program will help you to calculate the amount of             |" << endl;
