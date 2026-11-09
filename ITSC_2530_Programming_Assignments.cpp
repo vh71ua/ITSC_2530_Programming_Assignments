@@ -14,9 +14,9 @@ int main()
 
 	const int MIN_NAME_LENGTH = 2; // Minimum length for the name input
     const int MAX_NAME_LENGTH = 60; // Maximum length for the name input
-
     const int MAX_NUM_PIECES = 70; // Maximum number of pie pieces
 
+	bool bStartOver = false; // Flag to determine if the user wants to start over   
 
     // The Welcome and the base recipe banner section
     cout << " ------------------------------------------------------------------ " << endl;
@@ -37,117 +37,146 @@ int main()
     cout << " ------------------------------------------------------------------ " << endl;
     cout << "" << endl;
 
-    //User Input Section
-    //Name
-    cout << "--> Hello!" << endl;
-    cout << "--> Please, enter your name (single word string, e.g., John): ";
-	cin >> c_name;
 
-    if (c_name.empty() || c_name.length() < MIN_NAME_LENGTH || c_name.length() > MAX_NAME_LENGTH)
+    do  // Continuing the initial questioning, until user wants to move forward
+    {
+        //Resetting the Start over status
+        bStartOver = false;
+        //User Input Section
+        //Name
+        cout << "--> Hello!" << endl;
+        cout << "--> Please, enter your name (single word string, e.g., John): ";
+        cin >> c_name;
+
+        if (c_name.empty() || c_name.length() < MIN_NAME_LENGTH || c_name.length() > MAX_NAME_LENGTH)
         {
             cout << "\n(!) Please, enter a valid name: ";
             cin >> c_name;
-        }
+            cout << "\nHi, " << c_name << "! Nice to meet you!" << endl;
 
-    // Number of pie pieces
-	cout << "\nHi, " << c_name << "! Welcome to the Apple Pie planning program! <--" << endl;
-    cout << "\n--> Please, enter the number of pie pieces you want to bake (e.g., 4): ";
-    cin >> i_pieces;
-    if (cin.fail())
-    {
-        cout << "\nInvalid input detected. Default value of 4 pieceww will be used.";
-        cin.clear();
-        cin.ignore(200, '\n');
-        i_pieces = 4;
-    }
-    else
-    {
-        if (!(i_pieces <= 8) && (i_pieces > 20 && i_pieces <= MAX_NUM_PIECES)) // Not less than 8 or greater than 20 and less than or equal to 70
-        {
-            cout << "\nYour Project will require quite some time to complete! <--" << endl;
-        }
-        else if (i_pieces > 71)
-        {
-            cout << "\nYour Project needs a baking factory with staff to complete! You should start your own business! <--" << endl;
-        }
-        else if (i_pieces <= 0)
-        {
-            cout << "\n(!) You entered 0 pieces! Good bye!" << endl;
-            return (0);
-        }
-    }
-    
-    //BUDGET
-    cout << "\n--> What is your budget for the project (e.g., $10.00): $";
-    cin >> d_budget;
-    if (cin.fail())
-    {
-        cout << "\nInvalid input. Default value of $20.00 will be used. <--";
-        cin.clear();
-        cin.ignore(200, '\n');
-        d_budget = 20.00;
-    }
-    else
-    {
-        // We know that one piece will cost $1.00 to bake.
-        // Based on user input, we will calculate if the budget is sufficient to complete the project.
-        if (static_cast<int>(d_budget) < 1.00 * i_pieces)
-        {
-            cout << "\nYour budget for the project is too small. <--" << endl;
-            cout << "Please, consider to increase the budget and enter a new amount: $";
-            cin >> d_budget;
         }
         else
         {
-            cout << "\nYour budget for the project is sufficient." << endl;
+            cout << "\nHi, " << c_name << "!" << endl;
         }
-    }
-    //Reviewing user's input and determining the next step
-    int i_option = 0;
-    cout << fixed << setprecision(2);
-    cout << "" << endl;
-    cout << "" << endl;
-    cout << "===========================================" << endl;
-    cout << "Please, review the information provided:   " << endl;
-    cout << "===========================================" << endl;
-    cout << left << setw(30) << "Baker Name:" << c_name << endl;
-    cout << left << setw(30) << "Pie Pieces Requested:" << i_pieces << endl;
-    cout << left << setw(30) << "Project Budget:" << "$" << d_budget<< endl;
-    cout << "-------------------------------------------" << endl;
-    cout << "" << endl;
-    cout << "\nWould you like to: " << endl;
-    cout << "   1. Continue with the calculations" << endl;
-    cout << "   2. Use default values for one four-piece pie" << endl;
-    cout << "   3. Exit program" << endl;
-    cout << "\nPlease, enter your option (1, 2, or 3): ";
-    cin >> i_option;
-    if (cin.fail())
-    {
-        cout << "\nInvalid input. Option 1 will be used instead";
-        cin.clear();
-        cin.ignore(200, '\n');
-    }
-    else
-    {
-        switch (i_option)
+
+        // Number of pie pieces
+        cout << "\nWelcome to the Apple Pie planning program! <--" << endl;
+        cout << "\n--> Please, enter the number of pie pieces you want to bake (e.g., 4): ";
+        cin >> i_pieces;
+        if (cin.fail())
         {
-        case 1:
-            // Continue with the calculations
-            break;
-        case 2:
-            // Default values for one four-piece pie
+            cout << "\nInvalid input detected. Default value of 4 pieceww will be used.";
+            cin.clear();
+            cin.ignore(200, '\n');
             i_pieces = 4;
-            d_budget = 4.00;
-            break;
-        case 3:
-            // Exit program
-            return 0;
-        default:
-            cout << "\nInvalid option. Using Option 1 - Continue with Calculations.";
-            break;
         }
+        else
+        {
+            if (!(i_pieces <= 8) && (i_pieces > 20 && i_pieces <= MAX_NUM_PIECES)) // Not less than 8 or greater than 20 and less than or equal to 70
+            {
+                cout << "\nYour Project will require quite some time to complete! <--" << endl;
+            }
+            else if (i_pieces > 71)
+            {
+                cout << "\nYour Project needs a baking factory with staff to complete! You should start your own business! <--" << endl;
+            }
+            else if (i_pieces <= 0)
+            {
+                cout << "\n(!) You entered 0 pieces! Good bye!" << endl;
+                return (0);
+            }
+        }
+
+        //BUDGET
+        cout << "\n--> What is your budget for the project (e.g., $10.00): $";
+        cin >> d_budget;
+        if (cin.fail())
+        {
+            cout << "\nInvalid input. Default value of $20.00 will be used. <--";
+            cin.clear();
+            cin.ignore(200, '\n');
+            d_budget = 20.00;
+        }
+        else
+        {
+            // We know that one piece will cost $1.00 to bake.
+            // Based on user input, we will calculate if the budget is sufficient to complete the project.
+            if (static_cast<int>(d_budget) < 1.00 * i_pieces)
+            {
+                cout << "\nYour budget for the project is too small. <--" << endl;
+                cout << "Please, consider to increase the budget and enter a new amount: $";
+                cin >> d_budget;
+            }
+            else
+            {
+                cout << "\nYour budget for the project is sufficient." << endl;
+            }
+        }
+        //Reviewing user's input and determining the next step
+        int i_option = 0;
+        cout << fixed << setprecision(2);
+        cout << "" << endl;
+        cout << "" << endl;
+        cout << "===========================================" << endl;
+        cout << "Please, review the information provided:   " << endl;
+        cout << "===========================================" << endl;
+        cout << left << setw(30) << "Baker Name:" << c_name << endl;
+        cout << left << setw(30) << "Pie Pieces Requested:" << i_pieces << endl;
+        cout << left << setw(30) << "Project Budget:" << "$" << d_budget << endl;
+        cout << "-------------------------------------------" << endl;
+        cout << "" << endl;
+
+
+        bool bNoInputErrors = false;
+        while (!bNoInputErrors)  // Input validation with While)
+        {
+            cout << "\nWould you like to: " << endl;
+            cout << "   1. Continue with the calculations" << endl;
+            cout << "   2. Use default values for one four-piece pie" << endl;
+            cout << "   3. Start Over" << endl;
+            cout << "   4. Exit program" << endl;
+            cout << "\nPlease, enter your option (1, 2, 3 or 4): ";
+            cin >> i_option;
+            if (cin.fail())
+            {
+                bNoInputErrors = false;
+                cout << "\nInvalid input. Please, try again! \n" << endl;
+                cin.clear();
+                cin.ignore(200, '\n');
+            }
+            else
+            {
+                bNoInputErrors = true;
+                switch (i_option)
+                {
+                case 1:
+                    // Continue with the calculations
+                    break;
+                case 2:
+                    // Default values for one four-piece pie
+                    i_pieces = 4;
+                    d_budget = 4.00;
+                    break;
+                case 3:
+                    bStartOver = true;
+                    break;
+                case 4:
+                    // Exit program
+                    return 0;
+                default:
+                    cout << "\nInvalid option. Using Option 1 - Continue with Calculations.";
+                    break;
+                }
+            }
+        }
+
+        cout << "" << endl;
     }
-    cout << "" << endl;
+    while (bStartOver);  // We will retry the questioneer if user decided to start over the settings.
+
+
+
 
     // Calculate how many full 4-piece pies can be made with the entered budget
 
@@ -165,6 +194,11 @@ int main()
     // Estimated Total Cost ($1.00 per piece based on $4.00 for 4 pieces)
     double d_total_cost = 1.00 * i_pieces;
     double d_cost_difference = d_budget - d_total_cost;
+
+    string sInstructions1 = "1. Peel, core, and slice the apples.";
+    string sInstructions2 = "2. Mix flour, sugar, and baking powder together in a bowl.";
+    string sInstructions3 = "3. Beat the eggs and combine with the dry mixture.";
+    string sInstructions4 = "4. Fold in the sliced apples gently into the batter.";
 
     // Console Output: Summary Table
     //=============================================================================
@@ -210,11 +244,26 @@ int main()
     cout << "\n==================================================================" << endl;
     cout << "                        BAKING INSTRUCTIONS                       " << endl;
     cout << "==================================================================" << endl;
-    cout << "1. Peel, core, and slice the apples." << endl;
-    cout << "2. Mix flour, sugar, and baking powder together in a bowl." << endl;
-    cout << "3. Beat the eggs and combine with the dry mixture." << endl;
-    cout << "4. Fold in the sliced apples gently into the batter." << endl;
-    cout << "5. Bake at 350°F (175°C) for 35-40 minutes until golden brown." << endl;
+    //Printing the Instructions from the variables
+	for (int i = 0; i < 4; i++) 
+    {
+        switch (i)
+        {
+            case 0:
+                cout << sInstructions1 << endl;
+                break;
+            case 1:
+                cout << sInstructions2 << endl;
+                break;
+            case 2:
+                cout << sInstructions3 << endl;
+                break;
+            case 3:
+                cout << sInstructions4 << endl;
+                break;
+        }
+	}
+    cout << "5. Bake at 350"<< static_cast<char>(248) << "F (175" << static_cast<char>(248) << "C) for 35-40 minutes until golden brown." << endl;
     cout << "==================================================================" << endl;
 
     //=============================================================================
@@ -269,4 +318,4 @@ int main()
     cout << "\nYour report and baking instructions have been successfully saved to 'report.txt'." << endl;
 
     return 0;
-}
+ }

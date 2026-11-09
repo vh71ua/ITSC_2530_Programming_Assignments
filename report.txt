@@ -4,20 +4,20 @@
 Parameter / Ingredient                            Amount / Value
 ------------------------------------------------------------------
 Baker Name:                                       Vlad
-Pieces Requested:                                 10
+Pieces Requested:                                 4
 ------------------------------------------------------------------
-Apples:                                           7.50
-Eggs:                                             5.00
-Sugar (cups):                                     2.50
-Flour (cups):                                     2.50
-Baking Powder (tsp):                              2.50
+Apples:                                           3.00
+Eggs:                                             2.00
+Sugar (cups):                                     1.00
+Flour (cups):                                     1.00
+Baking Powder (tsp):                              1.00
 ------------------------------------------------------------------
-Total Estimated Cost:                                     $10.00
-Your Budget:                                              $50.00
+Total Estimated Cost:                                     $4.00
+Your Budget:                                              $10.00
 ------------------------------------------------------------------
-You have money leftover in your budget:           $40.00
-Full Pies Affordable ($4 ea):                     12
-Pie pieces Affordable ($1 ea):                    50
+You have money leftover in your budget:           $6.00
+Full Pies Affordable ($4 ea):                     2
+Pie pieces Affordable ($1 ea):                    10
 
 ==================================================================
                         BAKING INSTRUCTIONS                       
