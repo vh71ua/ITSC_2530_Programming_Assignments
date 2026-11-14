@@ -26,5 +26,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+    <None Include="LICENSE" />
+    <None Include="ITSC_2530_Programming_Assignments.slnx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="report.txt" />
   </ItemGroup>
 </Project>

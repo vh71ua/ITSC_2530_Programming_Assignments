@@ -206,7 +206,12 @@
     <Image Include="sources\mcc.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ITSC_2530_Programming_Assignments.slnx" />
+    <None Include="LICENSE" />
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="report.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
