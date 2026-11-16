@@ -431,7 +431,7 @@ bool validateUserInput(int& value)
     {
         // Number of pie pieces
         std::cout << "\nPlease, enter the number of pie pieces you want to bake (e.g., 4): ";
-        std::cin >> value;
+        std::cin >> value; 
 
         //Evaluating the User Input
         if (std::cin.fail()) // Input is wrong
