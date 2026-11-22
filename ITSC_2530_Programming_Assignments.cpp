@@ -17,20 +17,39 @@ const double d_cost_per_full_pie = 4.00;
 // Function Prototypes
 void DisplayBanner(bool bColor);
 void DisplayMenu(bool bColor);
-void SaveFile(string sFileName, int i_pieces, string s_name, double d_budget);
+void SaveFile(string sFileName, int i_pieces, string s_name, double d_budget, string sOrderType, double ingredient_remainder[], double ingredient_costs[], double d_total_cost);
 bool validateUserInput(string& value);
 bool validateUserInput(int& value);
 bool validateUserInput(double& value, int iPieces);
 bool getUserInput(int& i_pieces, double& d_budget, string& c_name);
+double calculateIndividualPrices(double remainder, double cost);
 
+//Enum
+enum OrderType {
+    house_pie,
+    potluck_pies,
+    catering_order
+};
+
+//Declaration of calculateIndividualPrices function
+double calculateIndividualPrices(double remainder, double cost)
+{
+	return remainder * cost;
+}
 //FUNCTION MAIN()
 int main()
 {
+    //Arrays for ingredients
+    double UserIngredients[5];
+	string Ingredients[5] = { "Apples", "Eggs", "Sugar (cups)", "Flour (cups)", "Baking Powder (tsp)" };
+
+    //Type of the Order (Enum)
+    OrderType order_type = house_pie; // Default order type is set to house_pie
     // Variables definitions (3 separate types: string, int, double)
     string c_name = "";       // User Name
     int i_pieces = 0;         //Number of Pie Pieces
     double d_budget = 0.00;   //Project Budget
-	bool bStartOver = false;  // Flag to determine if the user wants to start over
+    bool bStartOver = false;  // Flag to determine if the user wants to start over
     bool bColor = true;       // Flag for adding colors to the output
     bool bConsoleBlue = true; // Flag to change Console Color: blue=true/default=false 
 
@@ -42,7 +61,7 @@ int main()
     {
         //Resetting the Start Over status
         bStartOver = false;
-       
+
         //USER INPUT SECTION
         //======================================================================= 
         // Calling the input collection and validation Functions
@@ -53,7 +72,7 @@ int main()
             continue;
         }
         //=======================================================================
-      
+
         //Reviewing user's input and determining the next step
         int iOption = 0;
         cout << fixed << setprecision(2);
@@ -77,12 +96,12 @@ int main()
         bool bNoInputErrors = false;
         while (!bNoInputErrors)  // Input validation with While)
         {
-            
+
             DisplayMenu(bColor);
-           
+
             //User Input and Validation
             cin >> iOption;
-            if (cin.fail()) 
+            if (cin.fail())
             {
                 bNoInputErrors = false;
                 cout << "\nInvalid input. Please, try again! \n" << endl;
@@ -116,33 +135,105 @@ int main()
         }
 
         cout << "" << endl;
-    }
-    while (bStartOver);  // We will retry the questioneer if user decided to start over the settings.
+    } while (bStartOver);  // We will retry the questioneer if user decided to start over the settings.
 
-
+    //Determine amount of ingredients the user already has
+	for (int i = 0; i < 5; i++)
+	{
+		cout << "How many " << Ingredients[i] << " do you already have? ";
+		cin >> UserIngredients[i];
+		if (cin.fail() || UserIngredients[i] < 0)
+		{
+			cout << "\nInvalid input. Please, try again! \n" << endl;
+			cin.clear();
+			cin.ignore(200, '\n');
+			i--; // Decrement to repeat the same ingredient
+		}
+	}
 
 
     // Calculate how many full 4-piece pies can be made with the entered budget
 
-    
+
     int i_pies_affordable = static_cast<int>(d_budget / d_cost_per_full_pie);
     int i_pieces_affordable = static_cast<int>(d_budget / 1.00);
 
-    // Calculations based on user input (pieces) (scaling from base 4-piece recipe)
-    double d_apples = (3.0 / 4.0) * i_pieces;
-    double d_eggs = (2.0 / 4.0) * i_pieces;
-    double d_sugar = (1.0 / 4.0) * i_pieces;
-    double d_flour = (1.0 / 4.0) * i_pieces;
-    double d_baking_powder = (1.0 / 4.0) * i_pieces;
+	// Calculations based on user input (pieces) (scaling from base 4-piece recipe) (in the form of an array to calc price after factoring what the user already has)
+	double required_ingredients[5] = { (3.0 / 4.0) * i_pieces, (2.0 / 4.0) * i_pieces, (1.0 / 4.0) * i_pieces, (1.0 / 4.0) * i_pieces, (1.0 / 4.0) * i_pieces };
+
+	double ingredient_remainder[5];
+
+	for (int i = 0; i < 5; i++)
+	{
+		ingredient_remainder[i] = required_ingredients[i] - UserIngredients[i];
+		if (ingredient_remainder[i] <= 0)
+		{
+			ingredient_remainder[i] = 0; // No need to buy more if the user has enough
+		}
+		else
+		{
+			cout << "You need to buy " << ingredient_remainder[i] << " more " << Ingredients[i] << "." << endl;
+		}
+	}
+
+	double ingredient_costs[5] = { 0.75, 0.30, 0.50, 0.35, 0.30 }; // Costs for Apples, Eggs, Sugar, Flour, Baking Powder
+
+	double d_total_cost = 0.0;
+    
+	for (int i = 0; i < 5; i++)
+    {
+        d_total_cost += ingredient_remainder[i] * ingredient_costs[i];
+    }
+
+    //commenting out for now, may need later
+    //double d_apples = (3.0 / 4.0) * i_pieces;
+    //double d_eggs = (2.0 / 4.0) * i_pieces;
+    //double d_sugar = (1.0 / 4.0) * i_pieces;
+    //double d_flour = (1.0 / 4.0) * i_pieces;
+    //double d_baking_powder = (1.0 / 4.0) * i_pieces;
 
     // Estimated Total Cost ($1.00 per piece based on $4.00 for 4 pieces)
-    double d_total_cost = 1.00 * i_pieces;
-    double d_cost_difference = d_budget - d_total_cost;
+  double d_cost_difference = d_budget - d_total_cost;
 
     string sInstructions1 = "1. Peel, core, and slice the apples.";
     string sInstructions2 = "2. Mix flour, sugar, and baking powder together in a bowl.";
     string sInstructions3 = "3. Beat the eggs and combine with the dry mixture.";
     string sInstructions4 = "4. Fold in the sliced apples gently into the batter.";
+
+    //output statement variable for order type
+    string sOrderType;
+
+    //Evaluate OrderType
+    if (i_pieces <= 4)
+    {
+        order_type = house_pie;
+    }
+    else if (i_pieces > 4 && i_pieces <= 20)
+    {
+        order_type = potluck_pies;
+    }
+    else
+    {
+        order_type = catering_order;
+    }
+
+    //OrderType switch
+    switch (order_type)
+    {
+    case house_pie:
+        sOrderType = "\nYou have made a House Pie.";
+        break;
+    case potluck_pies:
+        sOrderType = "\nYou have made a Potluck Pie.";
+        break;
+    case catering_order:
+        sOrderType = "\nYou have made a Catering Order.";
+        break;
+    default:
+        sOrderType = "\nInvalid order type selected.";
+        break;
+    }
+
 
     // Console Output: Summary Table
     //=============================================================================
@@ -164,20 +255,21 @@ int main()
     cout << CYAN << left << setw(50) << "Baker Name:" << RESET << GREEN << c_name << RESET << endl;
     cout << CYAN << left << setw(50) << "Pieces Requested:" << RESET << GREEN << i_pieces << RESET << endl;
     cout << CYAN << "------------------------------------------------------------------" << RESET << endl;
-    cout << CYAN << left << setw(50) << "Apples:" << RESET << GREEN << d_apples << RESET << endl;
-    cout << CYAN << left << setw(50) << "Eggs:" << RESET << GREEN << d_eggs << RESET << endl;
-    cout << CYAN << left << setw(50) << "Sugar (cups):" << RESET << GREEN << d_sugar << RESET << endl;
-    cout << CYAN << left << setw(50) << "Flour (cups):" << RESET << GREEN << d_flour << RESET << endl;
-    cout << CYAN << left << setw(50) << "Baking Powder (tsp):" << RESET << GREEN << d_baking_powder << RESET << endl;
+    cout << CYAN << left << setw(50) << "Apples:" << RESET << GREEN << calculateIndividualPrices(ingredient_remainder[0], ingredient_costs[0]) << RESET << endl;
+    cout << CYAN << left << setw(50) << "Eggs:" << RESET << GREEN << calculateIndividualPrices(ingredient_remainder[1], ingredient_costs[1]) << RESET << endl;
+    cout << CYAN << left << setw(50) << "Sugar (cups):" << RESET << GREEN << calculateIndividualPrices(ingredient_remainder[2], ingredient_costs[2]) << RESET << endl;
+    cout << CYAN << left << setw(50) << "Flour (cups):" << RESET << GREEN << calculateIndividualPrices(ingredient_remainder[3], ingredient_costs[3]) << RESET << endl;
+    cout << CYAN << left << setw(50) << "Baking Powder (tsp):" << RESET << GREEN << calculateIndividualPrices(ingredient_remainder[4], ingredient_costs[4]) << RESET << endl;
     cout << CYAN << "------------------------------------------------------------------" << RESET << endl;
     cout << CYAN << left << setw(58) << "Total Estimated Cost:" << RESET << GREEN << "$" << d_total_cost << RESET << endl;
-    cout << CYAN << left << setw(58) << "Your Budget:" << RESET << GREEN << "$" << d_budget << RESET << endl;
-    cout << CYAN << "------------------------------------------------------------------" << RESET << endl;
+    cout << CYAN << left << setw(58) << "Your Budget:" << RESET << GREEN<< "$" << d_budget<< RESET<< endl;
+    cout << CYAN << left << setw(58) << "Order Type:" << sOrderType << RESET <<endl;
+    cout<<CYAN<<"------------------------------------------------------------------"<<RESET<<endl;
 
-    if (d_cost_difference > 0) 
+    if (d_cost_difference > 0)
     {
         cout << CYAN << left << setw(50) << "You have money leftover in your budget:" << RESET << GREEN << "$" << d_cost_difference << RESET << endl;
-    } 
+    }
     else if (d_cost_difference < 0)
     {
         cout << CYAN << left << setw(50) << "You have a deficit in your budget:" << RESET << GREEN << "$" << d_cost_difference << RESET << endl;
@@ -188,133 +280,128 @@ int main()
         cout << CYAN << "Well planned! You are within your budget." << endl;
 
     cout << CYAN << left << setw(50) << "Full Pies Affordable ($4 ea):" << RESET << GREEN << i_pies_affordable << RESET << endl;
-    cout << CYAN << left << setw(50) << "Pie pieces Affordable ($1 ea):" << RESET << GREEN << i_pieces_affordable <<RESET << endl;
+    cout << CYAN << left << setw(50) << "Pie pieces Affordable ($1 ea):" << RESET << GREEN << i_pieces_affordable << RESET << endl;
     cout << YELLOW << "\n==================================================================" << endl;
     cout << "                        BAKING INSTRUCTIONS                       " << endl;
     cout << "==================================================================" << endl;
     //Printing the Instructions from the variables
-	for (int i = 0; i < 4; i++) 
+    for (int i = 0; i < 4; i++)
     {
         switch (i)
         {
-            case 0:
-                cout << sInstructions1 << endl;
-                break;
-            case 1:
-                cout << sInstructions2 << endl;
-                break;
-            case 2:
-                cout << sInstructions3 << endl;
-                break;
-            case 3:
-                cout << sInstructions4 << endl;
-                break;
+        case 0:
+            cout << sInstructions1 << endl;
+            break;
+        case 1:
+            cout << sInstructions2 << endl;
+            break;
+        case 2:
+            cout << sInstructions3 << endl;
+            break;
+        case 3:
+            cout << sInstructions4 << endl;
+            break;
         }
-	}
-    cout << "5. Bake at 350"<< static_cast<char>(248) << "F (175" << static_cast<char>(248) << "C) for 35-40 minutes until golden brown." << endl;
+    }
+    cout << "5. Bake at 350" << static_cast<char>(248) << "F (175" << static_cast<char>(248) << "C) for 35-40 minutes until golden brown." << endl;
     cout << "==================================================================" << RESET << endl;
 
     //Saving File
-    SaveFile("report.txt", i_pieces, c_name, d_budget);
+    SaveFile("report.txt", i_pieces, c_name, d_budget, sOrderType, ingredient_remainder, ingredient_costs, d_total_cost);
 
     return 0;
- }
+}
 
 
 
 // DISPLAY BANNER FUNCTION
- void DisplayBanner(bool bColor)
- {
-     // The Welcome and the base recipe banner section
-     // Define color constants for convenience
+void DisplayBanner(bool bColor)
+{
+    // The Welcome and the base recipe banner section
+    // Define color constants for convenience
 
-     if (bColor == true)
-     {
-         cout << CYAN << " ------------------------------------------------------------------ " << RESET << endl;
-         cout << CYAN << "|" << BOLD << YELLOW << "          APPLE PIE                                               " << RESET << CYAN << "|" << RESET << endl;
-         cout << CYAN << " ------------------------------------------------------------------ " << RESET << endl;
-         cout << CYAN << "|" << RESET << "Welcome to the Apple Pie planning program!                        " << CYAN << "|" << RESET << endl;
-         cout << CYAN << "|" << RESET << "This program will help you to calculate the amount of             " << CYAN << "|" << RESET << endl;
-         cout << CYAN << "|" << RESET << "necessary ingredients for your apple pie based on your budget.    " << CYAN << "|" << RESET << endl;
-         cout << CYAN << " ------------------------------------------------------------------ " << RESET << endl;
-         cout << CYAN << "|" << BOLD << " BASE PIE RECIPE (FOR 4 PIECES):                                  " << CYAN << "|" << RESET << endl;
-         cout << CYAN << "|" << RESET << " - 3 apples (" << GREEN << "~$2.25" << RESET << ")                                              " << CYAN << "|" << RESET << endl;
-         cout << CYAN << "|" << RESET << " - 2 eggs (" << GREEN << "~$0.60" << RESET << ")                                                " << CYAN << "|" << RESET << endl;
-         cout << CYAN << "|" << RESET << " - 1 cup sugar (" << GREEN << "~$0.50" << RESET << ")                                           " << CYAN << "|" << RESET << endl;
-         cout << CYAN << "|" << RESET << " - 1 cup flour (" << GREEN << "~$0.35" << RESET << ")                                           " << CYAN << "|" << RESET << endl;
-         cout << CYAN << "|" << RESET << " - 1 tsp baking powder (" << GREEN << "~$0.30" << RESET << ")                                   " << CYAN << "|" << RESET << endl;
-         cout << CYAN << "|" << RESET << " Total Base Cost:      " << GREEN << "~$4.00" << RESET << "                                     " << CYAN << "|" << RESET << endl;
-         cout << CYAN << "|" << RESET << " Cost per one piece:   " << GREEN << "~$1.00" << RESET << "                                     " << CYAN << "|" << RESET << endl;
-         cout << CYAN << " ------------------------------------------------------------------ " << RESET << endl;
-         cout << "" << endl;
-     }
-     else
-     {
-         cout << " ------------------------------------------------------------------ " << endl;
-         cout << "|                            APPLE PIE                             |" << endl;
-         cout << " ------------------------------------------------------------------ " << endl;
-         cout << "|           Welcome to the Apple Pie planning program!             |" << endl;
-         cout << "|     This program will help you to calculate the amount of        |" << endl;
-         cout << "|  necessary ingredients for your apple pie based on your budget.  |" << endl;
-         cout << " ------------------------------------------------------------------ " << endl;
-         cout << "|                 BASE PIE RECIPE (FOR 4 PIECES):                  |" << endl;
-         cout << "|                     - 3 apples (~$2.25)                          |" << endl;
-         cout << "|                     - 2 eggs   (~$0.60)                          |" << endl;
-         cout << "|                     - 1 cup sugar (~$0.50)                       |" << endl;
-         cout << "|                     - 1 cup flour (~$0.35)                       |" << endl;
-         cout << "|                     - 1 tsp baking powder (~$0.30)               |" << endl;
-         cout << "|                     Total Base Cost: ~$4.00                      |" << endl;
-         cout << "|                  Cost per one piece: ~$1.00                      |" << endl;
-         cout << " ------------------------------------------------------------------ " << endl;
-         cout << "" << endl;
-     }
- }
+    if (bColor == true)
+    {
+        cout << CYAN << " ------------------------------------------------------------------ " << RESET << endl;
+        cout << CYAN << "|" << BOLD << YELLOW << "          APPLE PIE                                               " << RESET << CYAN << "|" << RESET << endl;
+        cout << CYAN << " ------------------------------------------------------------------ " << RESET << endl;
+        cout << CYAN << "|" << RESET << "Welcome to the Apple Pie planning program!                        " << CYAN << "|" << RESET << endl;
+        cout << CYAN << "|" << RESET << "This program will help you to calculate the amount of             " << CYAN << "|" << RESET << endl;
+        cout << CYAN << "|" << RESET << "necessary ingredients for your apple pie based on your budget.    " << CYAN << "|" << RESET << endl;
+        cout << CYAN << " ------------------------------------------------------------------ " << RESET << endl;
+        cout << CYAN << "|" << BOLD << " BASE PIE RECIPE (FOR 4 PIECES):                                  " << CYAN << "|" << RESET << endl;
+        cout << CYAN << "|" << RESET << " - 3 apples (" << GREEN << "~$2.25" << RESET << ")                                              " << CYAN << "|" << RESET << endl;
+        cout << CYAN << "|" << RESET << " - 2 eggs (" << GREEN << "~$0.60" << RESET << ")                                                " << CYAN << "|" << RESET << endl;
+        cout << CYAN << "|" << RESET << " - 1 cup sugar (" << GREEN << "~$0.50" << RESET << ")                                           " << CYAN << "|" << RESET << endl;
+        cout << CYAN << "|" << RESET << " - 1 cup flour (" << GREEN << "~$0.35" << RESET << ")                                           " << CYAN << "|" << RESET << endl;
+        cout << CYAN << "|" << RESET << " - 1 tsp baking powder (" << GREEN << "~$0.30" << RESET << ")                                   " << CYAN << "|" << RESET << endl;
+        cout << CYAN << "|" << RESET << " Total Base Cost:      " << GREEN << "~$4.00" << RESET << "                                     " << CYAN << "|" << RESET << endl;
+        cout << CYAN << "|" << RESET << " Cost per one piece:   " << GREEN << "~$1.00" << RESET << "                                     " << CYAN << "|" << RESET << endl;
+        cout << CYAN << " ------------------------------------------------------------------ " << RESET << endl;
+        cout << "" << endl;
+    }
+    else
+    {
+        cout << " ------------------------------------------------------------------ " << endl;
+        cout << "|                            APPLE PIE                             |" << endl;
+        cout << " ------------------------------------------------------------------ " << endl;
+        cout << "|           Welcome to the Apple Pie planning program!             |" << endl;
+        cout << "|     This program will help you to calculate the amount of        |" << endl;
+        cout << "|  necessary ingredients for your apple pie based on your budget.  |" << endl;
+        cout << " ------------------------------------------------------------------ " << endl;
+        cout << "|                 BASE PIE RECIPE (FOR 4 PIECES):                  |" << endl;
+        cout << "|                     - 3 apples (~$2.25)                          |" << endl;
+        cout << "|                     - 2 eggs   (~$0.60)                          |" << endl;
+        cout << "|                     - 1 cup sugar (~$0.50)                       |" << endl;
+        cout << "|                     - 1 cup flour (~$0.35)                       |" << endl;
+        cout << "|                     - 1 tsp baking powder (~$0.30)               |" << endl;
+        cout << "|                     Total Base Cost: ~$4.00                      |" << endl;
+        cout << "|                  Cost per one piece: ~$1.00                      |" << endl;
+        cout << " ------------------------------------------------------------------ " << endl;
+        cout << "" << endl;
+    }
+}
 
 
- // DISPLAY MENU FUNCTION
+// DISPLAY MENU FUNCTION
 
- void DisplayMenu(bool bColor)
- {
-     // The Welcome and the base recipe banner section
-     // Define color constants for convenience
+void DisplayMenu(bool bColor)
+{
+    // The Welcome and the base recipe banner section
+    // Define color constants for convenience
 
-     if (bColor == true)
-     {
-         cout << BLUE_CON;
-         cout << "\n Would you like to: " << endl;
-         cout << "1. Continue with the calculations" << endl;
-         cout << "2. Use default values for one four-piece pie" << endl;
-         cout << "3. Start Over" << endl;
-         cout << "4. Exit program" << endl;
-         cout << RESET;
-         cout << "\nPlease, enter your option (1, 2, 3 or 4): ";
-      
-     }
-     else
-     {
-         cout << "\nWould you like to: " << RESET << endl;
-         cout << "1. Continue with the calculations" << endl;
-         cout << "2. Use default values for one four-piece pie" << endl;
-         cout << "3. Start Over" << endl;
-         cout << "4. Exit program" << endl;
-         cout << "\nPlease, enter your option (1, 2, 3 or 4): ";
-     }
- }
+    if (bColor == true)
+    {
+        cout << BLUE_CON;
+        cout << "\n Would you like to: " << endl;
+        cout << "1. Continue with the calculations" << endl;
+        cout << "2. Use default values for one four-piece pie" << endl;
+        cout << "3. Start Over" << endl;
+        cout << "4. Exit program" << endl;
+        cout << RESET;
+        cout << "\nPlease, enter your option (1, 2, 3 or 4): ";
+
+    }
+    else
+    {
+        cout << "\nWould you like to: " << RESET << endl;
+        cout << "1. Continue with the calculations" << endl;
+        cout << "2. Use default values for one four-piece pie" << endl;
+        cout << "3. Start Over" << endl;
+        cout << "4. Exit program" << endl;
+        cout << "\nPlease, enter your option (1, 2, 3 or 4): ";
+    }
+}
 
 
 // SAVE FILE FUNCTION
-void SaveFile(string sFileName, int i_pieces, string s_name, double d_budget)
+void SaveFile(string sFileName, int i_pieces, string s_name, double d_budget, string sOrderType, double ingredient_remainder[], double ingredient_costs[], double d_total_cost)
 {
-    double d_total_cost = 1.00 * i_pieces;
+    
     double d_cost_difference = d_budget - d_total_cost;
-    double d_apples = (3.0 / 4.0) * i_pieces;
-    double d_eggs = (2.0 / 4.0) * i_pieces;
-    double d_sugar = (1.0 / 4.0) * i_pieces;
-    double d_flour = (1.0 / 4.0) * i_pieces;
-    double d_baking_powder = (1.0 / 4.0) * i_pieces;
     int i_pies_affordable = static_cast<int>(d_budget / d_cost_per_full_pie);
     int i_pieces_affordable = static_cast<int>(d_budget / 1.00);
-    
+
     //=============================================================================
     //  File Output: Save report and instructions to report.txt 
     //=============================================================================
@@ -331,14 +418,15 @@ void SaveFile(string sFileName, int i_pieces, string s_name, double d_budget)
     outfile << left << setw(50) << "Baker Name:" << s_name << endl;
     outfile << left << setw(50) << "Pieces Requested:" << i_pieces << endl;
     outfile << "------------------------------------------------------------------" << endl;
-    outfile << left << setw(50) << "Apples:" << d_apples << endl;
-    outfile << left << setw(50) << "Eggs:" << d_eggs << endl;
-    outfile << left << setw(50) << "Sugar (cups):" << d_sugar << endl;
-    outfile << left << setw(50) << "Flour (cups):" << d_flour << endl;
-    outfile << left << setw(50) << "Baking Powder (tsp):" << d_baking_powder << endl;
+    outfile << left << setw(50) << "Apples:" << calculateIndividualPrices(ingredient_remainder[0], ingredient_costs[0]) << endl;
+    outfile << left << setw(50) << "Eggs:" << calculateIndividualPrices(ingredient_remainder[1], ingredient_costs[1]) << endl;
+    outfile << left << setw(50) << "Sugar (cups):" << calculateIndividualPrices(ingredient_remainder[2], ingredient_costs[2]) << endl;
+    outfile << left << setw(50) << "Flour (cups):" << calculateIndividualPrices(ingredient_remainder[3], ingredient_costs[3]) << endl;
+    outfile << left << setw(50) << "Baking Powder (tsp):" << calculateIndividualPrices(ingredient_remainder[4], ingredient_costs[4]) << endl;
     outfile << "------------------------------------------------------------------" << endl;
     outfile << left << setw(58) << "Total Estimated Cost:" << "$" << d_total_cost << endl;
     outfile << left << setw(58) << "Your Budget:" << "$" << d_budget << endl;
+    outfile << left << setw(58) << "Order Type:" << sOrderType << endl;
     outfile << "------------------------------------------------------------------" << endl;
     if (d_cost_difference > 0)
     {
@@ -431,7 +519,7 @@ bool validateUserInput(int& value)
     {
         // Number of pie pieces
         std::cout << "\nPlease, enter the number of pie pieces you want to bake (e.g., 4): ";
-        std::cin >> value; 
+        std::cin >> value;
 
         //Evaluating the User Input
         if (std::cin.fail()) // Input is wrong

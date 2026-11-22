@@ -3,21 +3,21 @@
 ==================================================================
 Parameter / Ingredient                            Amount / Value
 ------------------------------------------------------------------
-Baker Name:                                       Mike
-Pieces Requested:                                 4
+Baker Name:                                       Mikw
+Pieces Requested:                                 6
 ------------------------------------------------------------------
-Apples:                                           0.00
+Apples:                                           1.88
 Eggs:                                             0.00
-Sugar (cups):                                     0.00
-Flour (cups):                                     0.00
-Baking Powder (tsp):                              0.00
+Sugar (cups):                                     0.75
+Flour (cups):                                     0.52
+Baking Powder (tsp):                              0.45
 ------------------------------------------------------------------
-Total Estimated Cost:                                     $0.00
+Total Estimated Cost:                                     $3.60
 Your Budget:                                              $10.00
 Order Type:                                               
-You have made a House Pie.
+You have made a Potluck Pie.
 ------------------------------------------------------------------
-You have money leftover in your budget:           $10.00
+You have money leftover in your budget:           $6.40
 Full Pies Affordable ($4 ea):                     2
 Pie pieces Affordable ($1 ea):                    10
 
